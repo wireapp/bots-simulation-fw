@@ -8,7 +8,6 @@ import com.wire.bots.sdk.user.API;
 import com.wire.bots.simulation.search.Service;
 
 import javax.ws.rs.client.Client;
-
 import java.util.UUID;
 
 /**
@@ -26,7 +25,7 @@ public class ConversationService {
      * Creates new conversation between the current user and provided service.
      * Returns ID of the conversation.
      */
-    public UUID connectService(UUID teamId, Service service, String token) throws HttpException {
+    public ConversationAccess createConversationWithService(UUID teamId, Service service, String token) throws HttpException {
         API api = new API(client, null, token);
         final Conversation conv = api.createConversation(service.name, teamId, null);
 
@@ -35,6 +34,6 @@ public class ConversationService {
 
         Logger.info("New Bot  `%s`, id:: %s", bot.name, bot.id);
 
-        return conv.id;
+        return new ConversationAccess(api, conv.id);
     }
 }

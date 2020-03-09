@@ -3,8 +3,8 @@ package com.wire.bots.simulation.search;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wire.bots.sdk.Configuration;
-import com.wire.bots.sdk.tools.Logger;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +21,7 @@ public class ServiceSearch {
     private final WebTarget target;
     private final String token;
 
-    public ServiceSearch(Client client, Configuration config, String token) {
+    public ServiceSearch(Client client, Configuration config, @NotNull String token) {
         this.token = token;
         target = client.target(config.apiHost);
     }
