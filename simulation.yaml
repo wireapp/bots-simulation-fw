@@ -17,21 +17,21 @@ server:
 logging:
   level: INFO
   loggers:
-    "com.wire.bots.logger": ${LOG_LEVEL:-INFO}
+    "com.wire": ${LOG_LEVEL:-INFO}
 
 apiHost: ${WIRE_API_HOST:-https://staging-nginz-https.zinfra.io}
-wsHost:  ${WIRE_WS_HOST:-wss://prod-nginz-ssl.wire.com}
+wsHost:  ${WIRE_WS_HOST:-wss://staging-nginz-ssl.wire.com}
 
 database:
   driverClass: ${DB_DRIVER:-org.postgresql.Driver}  # Can be: fs | redis | org.postgresql.Driver (default)
-  url: ${DB_URL:-jdbc:postgresql://localhost/echo}  # for File System it should be absolute path like: file:///var/echo/data or null
-  user: ${DB_USER:-}
-  password: ${DB_PASSWORD:-}
+  url: ${DB_URL:-jdbc:postgresql://localhost:5432/lithium}  # for File System it should be absolute path like: file:///var/echo/data or null
+  user: ${DB_USER:-wire-simulation}
+  password: ${DB_PASSWORD:-super-secret-wire-pwd}
 
 # Email and Password must be filled in order to run in user mode with ability to create conversations
 userMode:
-  email: ${EMAIL:-}
-  password: ${PASSWORD:-}
+  email: ${EMAIL:-lukas+pollteam@wire.com}
+  password: ${PASSWORD:-zHFEe5jA5oTWsB3s#}
 
 jerseyClient:
   timeout: 4s
@@ -52,4 +52,4 @@ jerseyClient:
       - TLSv1.2
 
 # bot test
-testedBot: "echo"
+testedBot: "Poll Bot"

@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  db:
+    image: postgres:12.2
+    container_name: simulation-db
+    environment:
+      - POSTGRES_USER=wire-simulation
+      - POSTGRES_PASSWORD=super-secret-wire-pwd
+      - POSTGRES_DB=lithium
+    ports:
+      - 5432:5432
+    volumes:
+      - simulation-db:/var/lib/postgresql/data/
+
+volumes:
+  simulation-db:

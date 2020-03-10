@@ -5,10 +5,11 @@ import com.wire.bots.sdk.server.model.Conversation;
 import com.wire.bots.sdk.server.model.User;
 import com.wire.bots.sdk.tools.Logger;
 import com.wire.bots.sdk.user.API;
+import com.wire.bots.simulation.connector.LoggedUser;
 import com.wire.bots.simulation.search.Service;
 
 import javax.ws.rs.client.Client;
-import java.util.UUID;
+import java.util.Collections;
 
 /**
  * Service used for managing the conversation resources.
@@ -25,13 +26,12 @@ public class ConversationService {
      * Creates new conversation between the current user and provided service.
      * Returns ID of the conversation.
      */
-    public ConversationAccess createConversationWithService(UUID teamId, Service service, String token) throws HttpException {
-        API api = new API(client, null, token);
-        final Conversation conv = api.createConversation(service.name, teamId, null);
+    public ConversationAccess createConversationWithService(LoggedUser user, Service service) throws HttpException {
+        API api = new API(client, null, user.token);
+        final Conversation conv = api.createConversation("Simulation test: " + service.name, user.teamId, Collections.singletonList(user.userId));
 
-        api = new API(client, conv.id, token);
+        api = new API(client, conv.id, user.token);
         final User bot = api.addService(service.serviceId, service.providerId);
-
         Logger.info("New Bot  `%s`, id:: %s", bot.name, bot.id);
 
         return new ConversationAccess(api, conv.id);

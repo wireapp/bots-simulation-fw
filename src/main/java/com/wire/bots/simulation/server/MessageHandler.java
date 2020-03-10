@@ -2,10 +2,7 @@ package com.wire.bots.simulation.server;
 
 import com.wire.bots.sdk.MessageHandlerBase;
 import com.wire.bots.sdk.WireClient;
-import com.wire.bots.sdk.assets.FileAsset;
-import com.wire.bots.sdk.assets.FileAssetPreview;
 import com.wire.bots.sdk.models.*;
-import com.wire.bots.sdk.server.model.Member;
 import com.wire.bots.sdk.server.model.NewBot;
 import com.wire.bots.sdk.server.model.SystemMessage;
 import com.wire.bots.sdk.server.model.User;
@@ -28,18 +25,18 @@ public class MessageHandler extends MessageHandlerBase {
      */
     @Override
     public boolean onNewBot(NewBot newBot, String token) {
-        Logger.info(String.format("onNewBot: bot: %s, username: %s",
-                newBot.id,
-                newBot.origin.handle));
-
-        for (Member member : newBot.conversation.members) {
-            if (member.service != null) {
-                Logger.warning("Rejecting NewBot. Provider: %s service: %s",
-                        member.service.providerId,
-                        member.service.id);
-                return false; // we don't want to be in a conv if other bots are there.
-            }
-        }
+//        Logger.info(String.format("onNewBot: bot: %s, username: %s",
+//                newBot.id,
+//                newBot.origin.handle));
+//
+//        for (Member member : newBot.conversation.members) {
+//            if (member.service != null) {
+//                Logger.warning("Rejecting NewBot. Provider: %s service: %s",
+//                        member.service.providerId,
+//                        member.service.id);
+//                return false; // we don't want to be in a conv if other bots are there.
+//            }
+//        }
         return true;
     }
 
@@ -50,8 +47,8 @@ public class MessageHandler extends MessageHandlerBase {
                     client.getId(),
                     client.getConversationId());
 
-            String label = "Hello! I am Echo. I echo everything you post here";
-            client.sendText(label);
+//            String label = "Hello! I am Echo. I echo everything you post here";
+//            client.sendText(label);
         } catch (Exception e) {
             Logger.error("onNewConversation: %s", e);
         }
@@ -69,15 +66,15 @@ public class MessageHandler extends MessageHandlerBase {
                     msg.getMessageId(),
                     msg.getTime());
 
-            String text = String.format("You wrote: _%s_", msg.getText());
+//            String text = String.format("You wrote: _%s_", msg.getText());
 
             // send echo back to user, mentioning this user
-            UUID messageId = client.sendText(text, userId);
+//            UUID messageId = client.sendText(text, userId);
 
-            Logger.info("Text sent back in conversation: %s, messageId: %s, bot: %s",
-                    client.getConversationId(),
-                    messageId,
-                    botId);
+//            Logger.info("Text sent back in conversation: %s, messageId: %s, bot: %s",
+//                    client.getConversationId(),
+//                    messageId,
+//                    botId);
         } catch (Exception e) {
             e.printStackTrace();
             Logger.error("onText: %s", e);
@@ -94,14 +91,14 @@ public class MessageHandler extends MessageHandlerBase {
                     msg.getWidth()
             );
 
-            // download this image from Wire server
-            byte[] img = client.downloadAsset(msg.getAssetKey(),
-                    msg.getAssetToken(),
-                    msg.getSha256(),
-                    msg.getOtrKey());
-
-            // echo this image back to user
-            client.sendPicture(img, msg.getMimeType());
+//            // download this image from Wire server
+//            byte[] img = client.downloadAsset(msg.getAssetKey(),
+//                    msg.getAssetToken(),
+//                    msg.getSha256(),
+//                    msg.getOtrKey());
+//
+//            // echo this image back to user
+//            client.sendPicture(img, msg.getMimeType());
         } catch (Exception e) {
             Logger.error("onImage: %s", e);
         }
@@ -117,17 +114,17 @@ public class MessageHandler extends MessageHandlerBase {
                     msg.getDuration() / 1000
             );
 
-            // download this audio from Wire Server
-            byte[] audio = client.downloadAsset(msg.getAssetKey(),
-                    msg.getAssetToken(),
-                    msg.getSha256(),
-                    msg.getOtrKey());
-
-            // echo this audio back to user
-            client.sendAudio(audio,
-                    msg.getName(),
-                    msg.getMimeType(),
-                    msg.getDuration());
+//            // download this audio from Wire Server
+//            byte[] audio = client.downloadAsset(msg.getAssetKey(),
+//                    msg.getAssetToken(),
+//                    msg.getSha256(),
+//                    msg.getOtrKey());
+//
+//            // echo this audio back to user
+//            client.sendAudio(audio,
+//                    msg.getName(),
+//                    msg.getMimeType(),
+//                    msg.getDuration());
         } catch (Exception e) {
             Logger.error("onAudio: %s", e);
         }
@@ -143,19 +140,19 @@ public class MessageHandler extends MessageHandlerBase {
                     msg.getDuration() / 1000
             );
 
-            // download this video from Wire Server
-            byte[] video = client.downloadAsset(msg.getAssetKey(),
-                    msg.getAssetToken(),
-                    msg.getSha256(),
-                    msg.getOtrKey());
-
-            // echo this video back to user
-            client.sendVideo(video,
-                    msg.getName(),
-                    msg.getMimeType(),
-                    msg.getDuration(),
-                    msg.getHeight(),
-                    msg.getWidth());
+//            // download this video from Wire Server
+//            byte[] video = client.downloadAsset(msg.getAssetKey(),
+//                    msg.getAssetToken(),
+//                    msg.getSha256(),
+//                    msg.getOtrKey());
+//
+//            // echo this video back to user
+//            client.sendVideo(video,
+//                    msg.getName(),
+//                    msg.getMimeType(),
+//                    msg.getDuration(),
+//                    msg.getHeight(),
+//                    msg.getWidth());
         } catch (Exception e) {
             Logger.error("onVideo: %s", e);
         }
@@ -164,7 +161,8 @@ public class MessageHandler extends MessageHandlerBase {
     @Override
     public void onText(WireClient client, EphemeralTextMessage msg) {
         try {
-            client.sendText("You wrote: " + msg.getText(), msg.getExpireAfterMillis());
+            Logger.info("Received text: %s", msg.getText());
+//            client.sendText("You wrote: " + msg.getText(), msg.getExpireAfterMillis());
         } catch (Exception e) {
             Logger.error("onEphemeralText: %s", e);
         }
@@ -179,12 +177,12 @@ public class MessageHandler extends MessageHandlerBase {
                     attach.getSize() / 1024
             );
 
-            // echo this file back to user
-            UUID messageId = UUID.randomUUID();
-            FileAssetPreview preview = new FileAssetPreview(attach.getName(), attach.getMimeType(), attach.getSize(), messageId);
-            FileAsset asset = new FileAsset(attach.getAssetKey(), attach.getAssetToken(), attach.getSha256(), messageId);
-
-            client.sendDirectFile(preview, asset, attach.getUserId());
+//            // echo this file back to user
+//            UUID messageId = UUID.randomUUID();
+//            FileAssetPreview preview = new FileAssetPreview(attach.getName(), attach.getMimeType(), attach.getSize(), messageId);
+//            FileAsset asset = new FileAsset(attach.getAssetKey(), attach.getAssetToken(), attach.getSha256(), messageId);
+//
+//            client.sendDirectFile(preview, asset, attach.getUserId());
         } catch (Exception e) {
             Logger.error("onAttachment: %s", e);
         }
@@ -217,7 +215,7 @@ public class MessageHandler extends MessageHandlerBase {
                 );
 
                 // say Hi to new participant
-                client.sendText("Hi there " + user.name);
+//                client.sendText("Hi there " + user.name);
             }
         } catch (Exception e) {
             Logger.error("onMemberJoin: %s", e);

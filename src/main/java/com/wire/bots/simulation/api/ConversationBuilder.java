@@ -32,7 +32,7 @@ public class ConversationBuilder {
         final Service service = servicesList.get(0);
 
         final ConversationService conversationService = new ConversationService(client);
-        final ConversationAccess conversationAccess = conversationService.createConversationWithService(user.teamId, service, user.token);
+        final ConversationAccess conversationAccess = conversationService.createConversationWithService(user, service);
 
         CryptoFactory cryptoFactory = botId -> new CryptoDatabase(botId, storage);
         Crypto crypto = cryptoFactory.create(user.userId);

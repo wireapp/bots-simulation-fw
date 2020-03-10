@@ -35,13 +35,13 @@ public class SimulationService extends Server<SimulationConfiguration> {
         final LoggedUser user = LoginService.login(client, config);
 
         final ServiceSearch serviceSearch = new ServiceSearch(client, config, user.token);
-        final List<Service> servicesList = serviceSearch.search(user.teamId, "botName");
+        final List<Service> servicesList = serviceSearch.search(user.teamId, config.botUnderTheTest);
 
         // TODO some validation is necessary
         final Service service = servicesList.get(0);
 
         final ConversationService conversationService = new ConversationService(client);
 
-        conversationService.createConversationWithService(user.teamId, service, user.token);
+        conversationService.createConversationWithService(user, service);
     }
 }
