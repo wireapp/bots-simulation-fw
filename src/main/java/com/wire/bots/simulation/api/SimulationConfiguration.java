@@ -1,9 +1,13 @@
 package com.wire.bots.simulation.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wire.bots.sdk.Configuration;
-import io.dropwizard.setup.Environment;
+
+import javax.validation.constraints.NotNull;
 
 public class SimulationConfiguration extends Configuration {
 
-    public Environment environment;
+    @JsonProperty("testedBot")
+    @NotNull
+    public String botUnderTheTest;
 }
